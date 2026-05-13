@@ -13,7 +13,6 @@ def dashboard(request):
     tasks = Task.objects.prefetch_related("steps", "messages", "status_history").all()
     return render(request, "assistant/dashboard.html", {"tasks": tasks})
 
-
 @csrf_exempt
 @require_http_methods(["POST"])
 def submit_request(request):

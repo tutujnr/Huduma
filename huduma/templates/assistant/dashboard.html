@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Huduma Global — Diaspora Services Platform</title>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-mark">HG</div>
+      <div>
+        <div class="logo-text">Huduma Global</div>
+        <div class="logo-sub">Diaspora Platform</div>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <label>Navigation</label>
+      <div class="nav-item active">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        Dashboard
+      </div>
+      <div class="nav-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+        </svg>
+        Tasks
+      </div>
+      <div class="nav-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+        </svg>
+        History
+      </div>
+      <div class="nav-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        Customers
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <label>Live Stats</label>
+      <div class="stat-cards">
+        <div class="mini-stat">
+          <div class="label">Total Tasks</div>
+          <div class="value accent" id="statTotal">—</div>
+        </div>
+        <div class="mini-stat">
+          <div class="label">Pending</div>
+          <div class="value" id="statPending">—</div>
+        </div>
+        <div class="mini-stat">
+          <div class="label">High Risk</div>
+          <div class="value red" id="statHigh">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:auto;padding-top:20px;border-top:1px solid var(--border);">
+      <div style="font-size:0.72rem;color:var(--text3);line-height:1.7;">
+        Powered by TeaHealth AI<br>
+        <span style="color:var(--border2);">v0.7</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Diaspora Service Assistant</h1>
+        <p class="page-sub">Submit a request in plain English — AI will extract, score, and assign it.</p>
+      </div>
+    </div>
+
+    <!-- Input Panel -->
+    <div class="input-panel">
+      <div class="input-label">What do you need done back home?</div>
+      <p class="input-hint">Describe your request naturally — money transfers, service hires, document verification, or airport pickups.</p>
+      <div class="input-row">
+        <textarea
+          id="requestInput"
+          class="request-input"
+          placeholder='E.g. "Send KES 20,000 to my father in Mombasa urgently" or "Verify my land title in Thika"'
+          rows="3"
+        ></textarea>
+        <button id="submitBtn" class="submit-btn">Submit Request</button>
+      </div>
+      <div id="examples" class="examples"></div>
+    </div>
+
+    <!-- Result Panel -->
+    <div id="resultPanel" class="result-panel">
+      <div class="result-header">
+        <h3>✓ Task Created Successfully</h3>
+        <span id="resTaskCode" class="task-code-badge">—</span>
+      </div>
+      <div class="result-body">
+
+        <!-- Top info row -->
+        <div class="result-row">
+          <div class="info-card">
+            <div class="card-label">Intent</div>
+            <div class="card-value"><span id="resIntent" class="intent-pill">—</span></div>
+          </div>
+          <div class="info-card">
+            <div class="card-label">Assigned Team</div>
+            <div class="card-value" id="resTeam">—</div>
+          </div>
+          <div class="info-card">
+            <div class="card-label">Status</div>
+            <div class="card-value" id="resStatus">Pending</div>
+          </div>
+        </div>
+
+        <!-- Risk -->
+        <div class="info-card" style="display:flex;align-items:center;gap:24px;">
+          <div>
+            <div class="card-label">Risk Score</div>
+            <div class="card-value" id="resRiskScore">—</div>
+          </div>
+          <span id="resRiskBadge" class="risk-badge Low">Low</span>
+          <p style="font-size:0.8rem;color:var(--text3);max-width:400px;">
+            Risk is calculated using urgency, amount, recipient clarity, and document type — specific to the Kenyan diaspora context.
+          </p>
+        </div>
+
+        <!-- Entities -->
+        <div>
+          <div class="card-label" style="margin-bottom:10px;">Extracted Entities</div>
+          <div id="resEntities" class="entities-grid"></div>
+        </div>
+
+        <!-- Steps -->
+        <div>
+          <div class="card-label" style="margin-bottom:10px;">Fulfilment Steps</div>
+          <div id="resSteps" class="steps-list"></div>
+        </div>
+
+        <!-- Messages -->
+        <div>
+          <div class="card-label" style="margin-bottom:12px;">Confirmation Messages</div>
+          <div class="msg-tabs">
+            <button class="msg-tab active" data-tab="whatsapp" onclick="switchMsgTab('whatsapp')">📱 WhatsApp</button>
+            <button class="msg-tab" data-tab="email" onclick="switchMsgTab('email')">📧 Email</button>
+            <button class="msg-tab" data-tab="sms" onclick="switchMsgTab('sms')">💬 SMS</button>
+          </div>
+          <div id="msgSubject" class="msg-subject" style="display:none;"></div>
+          <div id="msgBody" class="msg-content"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Task Dashboard -->
+    <div>
+      <div class="section-title">
+        All Tasks
+        <span id="taskCount" class="count">0</span>
+      </div>
+      <div class="tasks-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Task Code</th>
+              <th>Intent</th>
+              <th>Status</th>
+              <th>Risk</th>
+              <th>Team</th>
+              <th>Created</th>
+              <th>Update Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tasksBody">
+            <tr>
+              <td colspan="8">
+                <div class="empty-state">
+                  <div class="empty-icon">📋</div>
+                  <p>No tasks yet — submit a request above to get started.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Loading overlay -->
+<div id="loadingOverlay" class="loading-overlay">
+  <div class="spinner"></div>
+  <div class="loading-text">AI is analysing your request…</div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

@@ -7,7 +7,7 @@ import openai
 from openai import OpenAI
 
 
-#client = anthropic.Anthropic()
+#client=anthropic.Anthropic()
 load_dotenv()
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 

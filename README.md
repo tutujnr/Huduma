@@ -26,17 +26,17 @@ Open http://localhost:8000 in your browser.
 
 ## Features Implemented
 
-| # | Feature | Status |
+| # | Feature 
 |---|---------|--------|
-| 1 | Plain-English input with example chips | ✅ |
-| 2 | AI intent extraction (5 intents, structured JSON) | ✅ |
-| 3 | Risk scoring with Kenya-specific logic | ✅ |
-| 4 | Task creation with unique codes (VG-XXXXXXXX) | ✅ |
-| 5 | Step generation (intent-specific, 3–6 steps) | ✅ |
-| 6 | Three-format messages (WhatsApp, Email, SMS) | ✅ |
-| 7 | Employee/team assignment | ✅ |
-| 8 | Task dashboard with live status updates | ✅ |
-| 9 | Full database persistence + SQL dump | ✅ |
+| 1 | Plain-English input with example chips 
+| 2 | AI intent extraction (5 intents, structured JSON) 
+| 3 | Risk scoring with Kenya-specific logic 
+| 4 | Task creation with unique codes (VG-XXXXXXXX) 
+| 5 | Step generation (intent-specific, 3–6 steps) 
+| 6 | Three-format messages (WhatsApp, Email, SMS) 
+| 7 | Employee/team assignment 
+| 8 | Task dashboard with live status updates 
+| 9 | Full database persistence + SQL dump 
 
 ---
 

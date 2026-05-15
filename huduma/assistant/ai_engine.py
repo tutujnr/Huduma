@@ -11,7 +11,7 @@ from openai import OpenAI
 load_dotenv()
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-SYSTEM_PROMPT = """You are an AI assistant for Vunoh Global, a platform that helps Kenyan diaspora customers manage tasks back home.
+SYSTEM_PROMPT = """You are an AI assistant for Huduma Global, a platform that helps Kenyan diaspora customers manage tasks back home.
 
 Your job is to analyze a customer's plain-English request and return ONLY a valid JSON object — no prose, no markdown, no code fences.
 
